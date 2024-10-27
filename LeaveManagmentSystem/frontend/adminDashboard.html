@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { max-width: 800px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div id="leaveRequests"></div>
+    </div>
+    <script>
+        async function fetchLeaveRequests() {
+            const response = await fetch('/api/leaves');
+            const requests = await response.json();
+            const requestsDiv = document.getElementById('leaveRequests');
+            requestsDiv.innerHTML = '';
+
+            requests.forEach(request => {
+                const requestDiv = document.createElement('div');
+                requestDiv.innerHTML = `
+                    <h4>Leave Request</h4>
+                    <p><strong>Reason:</strong> ${request.reason}</p>
+                    <p><strong>Start:</strong> ${new Date(request.startTime).toLocaleString()}</p>
+                    <p><strong>End:</strong> ${new Date(request.endTime).toLocaleString()}</p>
+                    <p><strong>Status:</strong> ${request.status}</p>
+                    <button onclick="approveLeave('${request._id}')">Approve</button>
+                    <button onclick="denyLeave('${request._id}')">Deny</button>
+                    <hr>
+                `;
+                requestsDiv.appendChild(requestDiv);
+            });
+        }
+
+        async function approveLeave(id) {
+            const response = await fetch(`/api/leaves/${id}/approve`, {
+                method: 'PUT',
+            });
+            const data = await response.json();
+            alert(data.message);
+            fetchLeaveRequests();
+        }
+
+        async function denyLeave(id) {
+            const response = await fetch(`/api/leaves/${id}/deny`, {
+                method: 'PUT',
+            });
+            const data = await response.json();
+            alert(data.message);
+            fetchLeaveRequests();
+        }
+
+        // Fetch leave requests on page load
+        fetchLeaveRequests();
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { max-width: 400px; text-align: center; }
+        input, textarea, button { width: 100%; padding: 10px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Leave Request</h1>
+        <form id="leaveRequestForm">
+            <textarea id="reason" placeholder="Reason for leave" required></textarea>
+            <input type="datetime-local" id="startTime" required>
+            <input type="datetime-local" id="endTime" required>
+            <button type="submit">Request Leave</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('leaveRequestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const reason = document.getElementById('reason').value;
+            const startTime = new Date(document.getElementById('startTime').value);
+            const endTime = new Date(document.getElementById('endTime').value);
+            
+            // Replace 'studentId' with the actual student ID (you can retrieve it from session/local storage or backend)
+            const studentId = 'sampleStudentId';
+
+            const response = await fetch('/api/leaves', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ studentId, reason, startTime, endTime }),
+            });
+
+            const data = await response.json();
+            alert(data.message);
+        });
+    </script>
+</body>
+</html>

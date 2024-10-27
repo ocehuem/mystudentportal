@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Leave Timeline</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { max-width: 800px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Leave Timeline</h1>
+        <div id="leaveTimeline"></div>
+    </div>
+    <script>
+        async function fetchLeaveTimeline() {
+            const response = await fetch('/api/leaves/timeline'); // Replace with actual API endpoint for leave timeline
+            const timelines = await response.json();
+            const timelineDiv = document.getElementById('leaveTimeline');
+            timelineDiv.innerHTML = '';
+
+            timelines.forEach(entry => {
+                const entryDiv = document.createElement('div');
+                entryDiv.innerHTML = `
+                    <h4>Leave Entry</h4>
+                    <p><strong>Reason:</strong> ${entry.reason}</p>
+                    <p><strong>Start:</strong> ${new Date(entry.startTime).toLocaleString()}</p>
+                    <p><strong>End:</strong> ${new Date(entry.endTime).toLocaleString()}</p>
+                    <p><strong>Status:</strong> ${entry.status}</p>
+                    <hr>
+                `;
+                timelineDiv.appendChild(entryDiv);
+            });
+        }
+
+        // Fetch leave timeline on page load
+        fetchLeaveTimeline();
+    </script>
+</body>
+</html>

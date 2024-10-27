@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { max-width: 800px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Security Dashboard</h1>
+        <div id="studentCheckIns"></div>
+    </div>
+    <script>
+        async function fetchStudentCheckIns() {
+            const response = await fetch('/api/checkins'); // Replace with actual API endpoint for check-ins
+            const checkIns = await response.json();
+            const checkInsDiv = document.getElementById('studentCheckIns');
+            checkInsDiv.innerHTML = '';
+
+            checkIns.forEach(checkIn => {
+                const checkInDiv = document.createElement('div');
+                checkInDiv.innerHTML = `
+                    <h4>Check-In</h4>
+                    <p><strong>Student ID:</strong> ${checkIn.studentId}</p>
+                    <p><strong>Time:</strong> ${new Date(checkIn.time).toLocaleString()}</p>
+                    <hr>
+                `;
+                checkInsDiv.appendChild(checkInDiv);
+            });
+        }
+
+        // Fetch check-ins on page load
+        fetchStudentCheckIns();
+    </script>
+</body>
+</html>

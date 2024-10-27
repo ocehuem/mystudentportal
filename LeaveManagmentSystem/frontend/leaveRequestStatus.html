@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Request Status</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { max-width: 800px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Leave Request Status</h1>
+        <div id="leaveRequests"></div>
+    </div>
+    <script>
+        async function fetchLeaveRequestStatus() {
+            const response = await fetch('/api/leaves/status'); // Replace with actual API endpoint for leave status
+            const requests = await response.json();
+            const requestsDiv = document.getElementById('leaveRequests');
+            requestsDiv.innerHTML = '';
+
+            requests.forEach(request => {
+                const requestDiv = document.createElement('div');
+                requestDiv.innerHTML = `
+                    <h4>Leave Request</h4>
+                    <p><strong>Reason:</strong> ${request.reason}</p>
+                    <p><strong>Start:</strong> ${new Date(request.startTime).toLocaleString()}</p>
+                    <p><strong>End:</strong> ${new Date(request.endTime).toLocaleString()}</p>
+                    <p><strong>Status:</strong> ${request.status}</p>
+                    <hr>
+                `;
+                requestsDiv.appendChild(requestDiv);
+            });
+        }
+
+        // Fetch leave request status on page load
+        fetchLeaveRequestStatus();
+    </script>
+</body>
+</html>
