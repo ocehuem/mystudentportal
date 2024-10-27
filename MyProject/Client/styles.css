@@ -1,0 +1,22 @@
+/* /Client/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
