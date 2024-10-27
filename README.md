@@ -1,3 +1,4 @@
+in azure: https://ssiitdh-bvdrgyhwhqc9hccf.centralindia-01.azurewebsites.net/
 The above repository contains 2 different frameworks folders used to implement leave_management_system for students
 
 1. LeaveManagementSystem ---- Used html,css, javascript as frontend
