@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Leave Requests</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDE0fHx3YWxscGFwZXJ8ZW58MHx8fHwxNjg5NjY5NTk4&ixlib=rb-1.2.1&q=80&w=1080') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .btn-approve {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-disapprove {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>All Submitted Leave Requests</h2>
+        <table id="submissionTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="submissionList">
+                <!-- Submission rows will be dynamically added here -->
+            </tbody>
+        </table>
+        <button onclick="displaySubmissions()" class="btn btn-primary">Show All Submissions</button>
+    </div>
+
+    <script>
+        // Function to approve the leave request
+        function approveRequest(index) {
+            const submissions = JSON.parse(localStorage.getItem('leaveRequests')) || [];
+            submissions[index].status = "Approved";  // Update the status
+            localStorage.setItem('leaveRequests', JSON.stringify(submissions));
+            displaySubmissions();  // Refresh the table
+        }
+
+        // Function to disapprove the leave request
+        function disapproveRequest(index) {
+            const submissions = JSON.parse(localStorage.getItem('leaveRequests')) || [];
+            submissions[index].status = "Disapproved";  // Update the status
+            localStorage.setItem('leaveRequests', JSON.stringify(submissions));
+            displaySubmissions();  // Refresh the table
+        }
+
+        // Function to display all submissions in the table
+        function displaySubmissions() {
+            const submissions = JSON.parse(localStorage.getItem('leaveRequests')) || [];
+            const submissionList = document.getElementById('submissionList');
+            submissionList.innerHTML = '';  // Clear the table first
+
+            if (submissions.length > 0) {
+                submissions.forEach((submission, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${submission.studentID}</td>
+                        <td>${submission.startTime}</td>
+                        <td>${submission.endTime}</td>
+                        <td>${submission.reason}</td>
+                        <td>${submission.status || 'Pending'}</td>
+                        <td>
+                            <button class="btn btn-approve" onclick="approveRequest(${index})">Approve</button>
+                            <button class="btn btn-disapprove" onclick="disapproveRequest(${index})">Disapprove</button>
+                        </td>
+                    `;
+                    submissionList.appendChild(row);
+                });
+            } else {
+                submissionList.innerHTML = '<tr><td colspan="6">No submissions yet.</td></tr>';
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

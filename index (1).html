@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Leave Request</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDE0fHx3YWxscGFwZXJ8ZW58MHx8fHwxNjg5NjY5NTk4&ixlib=rb-1.2.1&q=80&w=1080') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            margin: 10px 0;
+        }
+
+        #error-message {
+            color: red;
+            margin-top: -10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Submit Leave Request</h2>
+        <form id="leaveForm">
+            <input type="text" class="form-control" id="studentID" placeholder="Student ID (e.g. 220010001)" required>
+            <div id="rollNumberError" style="color: red;"></div>
+
+            <input type="datetime-local" class="form-control" id="startTime" placeholder="Start Time" required>
+            <input type="datetime-local" class="form-control" id="endTime" placeholder="End Time" required>
+            <div id="timeError" style="color: red;"></div>
+
+            <textarea class="form-control" id="reason" placeholder="Enter reason for leave" required></textarea>
+            <div id="reasonError" style="color: red;"></div>
+
+            <button id="submit" type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+        <div id="error-message"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function validateRollNumber(rollNumber) {
+            const rollNumberPattern = /^22001\d{4}$/;
+            return rollNumberPattern.test(rollNumber);
+        }
+
+        function validateTime(startTime, endTime) {
+            const start = new Date(startTime);
+            const end = new Date(endTime);
+            return start < end;
+        }
+
+        document.getElementById('submit').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const rollNumber = document.getElementById('studentID').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const reason = document.getElementById('reason').value;
+
+            // Validate the inputs
+            let isValid = true;
+            if (!validateRollNumber(rollNumber)) {
+                document.getElementById('rollNumberError').innerText = 'Invalid roll number format.';
+                isValid = false;
+            } else {
+                document.getElementById('rollNumberError').innerText = '';
+            }
+
+            if (!validateTime(startTime, endTime)) {
+                document.getElementById('timeError').innerText = 'End time must be after start time.';
+                isValid = false;
+            } else {
+                document.getElementById('timeError').innerText = '';
+            }
+
+            if (reason.trim() === "") {
+                document.getElementById('reasonError').innerText = 'Reason is required.';
+                isValid = false;
+            } else {
+                document.getElementById('reasonError').innerText = '';
+            }
+
+            if (isValid) {
+                // Save the submission to localStorage
+                let submissions = JSON.parse(localStorage.getItem('leaveRequests')) || [];
+                submissions.push({
+                    studentID: rollNumber,
+                    startTime: startTime,
+                    endTime: endTime,
+                    reason: reason
+                });
+                localStorage.setItem('leaveRequests', JSON.stringify(submissions));
+                alert('Leave request submitted successfully!');
+                document.getElementById('leaveForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
