@@ -1,0 +1,24 @@
+<!-- /Client/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Leave Request</title>
+</head>
+<body>
+    <h1>Leave Request Form</h1>
+    <form id="leaveRequestForm">
+        <input type="text" id="studentName" placeholder="Your Name" required>
+        <input type="text" id="rollNumber" placeholder="Roll Number" required>
+        <input type="date" id="startDate" required>
+        <input type="date" id="endDate" required>
+        <textarea id="reason" placeholder="Reason for Leave" required></textarea>
+        <button type="submit">Submit Leave Request</button>
+    </form>
+    <div id="message"></div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
