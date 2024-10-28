@@ -113,7 +113,7 @@ readme.txt
     <li><strong>Admin View Overload</strong>: No filtering for completed leave requests, making it cumbersome for the admin to navigate.</li>
 </ol>
 
-<h4>The LeaveManagementSystem and MyProject folders are partially completed . You won't able to run them currently.</h4>
+<h4>The LeaveManagementSystem and MyProject folders are partially completed . You won't able to run them currently. We trying to rectify all the Cons of 3rd approach here though! </h4>
 
 </body>
 </html>
