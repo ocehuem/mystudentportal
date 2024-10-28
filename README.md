@@ -11,7 +11,7 @@
         <ul>
             <li><strong>Frontend</strong>: HTML, CSS, JavaScript</li>
             <li><strong>Backend</strong>: MongoDB, Express.js, Node.js, JWT Authentication</li>
-            <li>n azure: https://ssiitdh-bvdrgyhwhqc9hccf.centralindia-01.azurewebsites.net/</li>
+            <li> In azure: https://ssiitdh-bvdrgyhwhqc9hccf.centralindia-01.azurewebsites.net/</li>
         </ul>
     </li>
     <li><strong>MyProject</strong>
