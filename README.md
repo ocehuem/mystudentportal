@@ -5,6 +5,8 @@
 
 <p>This repository contains two separate implementations of a <strong>Leave Management System</strong> using different frameworks and technologies. Additionally, a third approach was submitted as a demo on DevFolio, which demonstrates basic leave management functionality using only HTML, CSS, and JavaScript with local storage.</p>
 
+<p>Link for Live Demo : https://devfolio.co/projects/leavemanagementsystem-2b23</p>
+
 <h2>Project Structure</h2>
 <ol>
     <li><strong>LeaveManagementSystem</strong>
