@@ -1,3 +1,7 @@
+Leave Management System
+Built multiple implementations of a full-stack leave management system to handle student leave requests and admin approvals. Implemented one version with MERN stack (MongoDB, Express.js, Node.js, React/JavaScript, JWT authentication) deployed on Azure, and another with C#, .NET, and Azure Web App for backend services. Also created a lightweight demo using HTML, CSS, and JavaScript with Local Storage for DevFolio submission.
+
+
 <!DOCTYPE html>
 <body>
 
